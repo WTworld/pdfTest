@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--引入配置文件-->
+    <properties resource="generator/db-config.properties"></properties>
+
+    <!-- 引入数据库驱动 -->
+    <!--   <classPathEntry location="${jdbc.driverClassLocation}"/> -->
+    <!-- 这个地方使用MyBatis3，如果使用 MyBatis3Simple不生成XXXBySample-->
+    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <property name="useMapperCommentGenerator" value="false"/>
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+        <!-- 是否禁止显示日期 true：是 ： false:否 -->
+        <property name="suppressDate" value="false"/>
+        <!-- 是否去除自动生成的所有注释 true：是 ： false:否 -->
+        <!-- 是否添加字段注释 true:是 false：否 -->
+        <property name="addRemarkComments" value="true"/>
+        <property name="suppressAllComments" value="true"/>
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="${generator.mappers}"/>
+            <property name="caseSensitive" value="true"/>
+            <property name="forceAnnotation" value="true"/>
+            <!-- <property name="beginningDelimiter" value="`"/>
+            <property name="endingDelimiter" value="`"/> -->
+        </plugin>
+        <!--第一个要修改的地方，mysql连接信息-->
+        <jdbcConnection driverClass="${jdbc.driverClass}"
+                        connectionURL="${jdbc.connectionURL}"
+                        userId="${jdbc.username}"
+                        password="${jdbc.password}">
+        </jdbcConnection>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!--第2个要修改的地方，模型-->
+      <javaModelGenerator targetPackage="${generator.javaModel-targetPackage}"
+                            targetProject="${generator.targetProject}">
+            <property name="rootClass" value="${generator.model}"/> 
+        </javaModelGenerator>
+        <!-- 第4个要修改的地方 ，xml -->
+        <!-- 第3个要修改的地方 ,mapper接口 -->
+       <sqlMapGenerator targetPackage="${generator.sqlMap-targetPackage}" targetProject="${generator.resource}"/>
+        <javaClientGenerator targetPackage="${generator.javaClient-targetPackage}"
+                             targetProject="${generator.targetProject}" type="XMLMAPPER"/>
+
+        <!--第5个要修改的地方这是表名字，表id，也可以设置生成mapper的别名-->
+
+       
+      
+        
+      	 <table tableName="TEST_PrintWaveNo" schema="dbo" >
+        <!-- 如果设置为true，生成的model类会直接使用column本身的名字，而不会再使用驼峰命名方法
+        		，比如BORN_DATE，生成的属性名字就是BORN_DATE,而不会是bornDate -->
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table tableName="TEST_PrintExpressNo" schema="dbo" >
+        <!-- 如果设置为true，生成的model类会直接使用column本身的名字，而不会再使用驼峰命名方法
+        		，比如BORN_DATE，生成的属性名字就是BORN_DATE,而不会是bornDate -->
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+    </context>
+
+
+</generatorConfiguration>
